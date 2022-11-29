@@ -1,48 +1,57 @@
-import { useState } from 'react';
+import React, { useState } from "react";
 
+function GalleryItem(props) {
+    let [view, setView] = useState(false)
 
+    const simpleView = () =>{
+        return(
+            <div style={simpleStyle}>
+                <h3>{props.item.trackName}</h3>
+                <h4>{props.item.collectionName}</h4>
+            </div>
+        )
+    }
 
-function Galleryitem(props) {
-  let [view, setView] = useState(false);
+    const detailView = () => {
+        return(
+            <div style={detailStyle}>
+                <h2>{props.item.trackName}</h2>
+                <h3>{props.item.collectionName}</h3>
+                <h4>{props.item.primaryGenreName}</h4>
+                <h5>{props.item.releaseDate}</h5>
+            </div>
+        )
+    }
 
-  //code to convert milliseconds to minute
-  const millisToMinutesAndSeconds = (millis) => {
-    var minutes = Math.floor(millis / 60000);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
-    //ES6 interpolated literals/template literals 
-    //If seconds is less than 10 put a zero in front.
-    return `${minutes}:${(seconds < 10 ? "0" : "")}${seconds}`;
-  }
-
-  const simpleView = () => {
+    const simpleStyle = {
+        'width': '25vw',
+        'height': '20vh',
+        'border': '1px solid black',
+        'margin': '2px',
+        'border-radius':'15px',
+        // 'background-color':'black',
+        // 'font':'lightgrey'
+    }
+    
+    const detailStyle = {
+        'width': '80vw',
+        'height': '20vh',
+        'border': '1px solid black',                    
+        'margin': '2px',
+        'backgroundImage': `url(${props.item.artworkUrl100})`,
+        'backgroundSize': 'contain',
+        'color': 'orange',
+        'border-radius':'25px',
+        'padding':'1%'
+    }
+    
+//"not view", or !view, changes the useState to true
     return (
-      <div className='simple'>
-        <h2>{props.item.trackName}</h2>
-        <small>{props.item.collectionName}collectionName</small>
-        <h4>{millisToMinutesAndSeconds(props.item.trackTimeMillis)}</h4>
-      </div>
+        <div onClick={()=> setView(!view)} style={{'display':'inline-block'}}>
+            {/*Ternary shows simple view when "view" is false */}
+            {view ? detailView() : simpleView()}
+        </div>
     )
-  }
-
-  const detailView = () => {
-    return (
-      <div class="imgcontainer">
-        <img src={props.item.artworkUrl100}
-          alt="Avatar" class="trackimage" />
-      </div>
-    )
-  }
-  return (
-    <div onClick={() => setView(!view)}
-      style={{ 'display': 'inline-block' }}>
-
-      {view ? simpleView() : detailView()}
-
-    </div>
-  )
 }
 
-export default Galleryitem
-
-
-
+export default GalleryItem
