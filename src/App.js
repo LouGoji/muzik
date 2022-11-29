@@ -46,10 +46,3 @@ const handleSearch = (e, term) => {
 }
 
 export default App;
-
-
-
-
-
-
-
