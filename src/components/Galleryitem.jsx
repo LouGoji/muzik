@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const GalleryItem = (props) => {
     let [view, setView] = useState(false)
